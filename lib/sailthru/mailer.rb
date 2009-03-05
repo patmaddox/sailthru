@@ -7,11 +7,15 @@ module Sailthru
 
     def deliver(client, template)
       raise NoRecipientsSetError unless @recipients
-      client.send(template, @recipients, @replacements, @options)
+      client.send(@template || template, @recipients, @replacements, @options)
     end
 
     def recipients(*list)
       @recipients = list.join(', ')
+    end
+
+    def template(name)
+      @template = name
     end
 
     def body(replacements)

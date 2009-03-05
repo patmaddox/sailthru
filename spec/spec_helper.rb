@@ -19,6 +19,11 @@ class MyMailer < Sailthru::Mailer
     reply_to "admin@example.com"
   end
 
+  def with_custom_template
+    template 'super_template'
+    recipients 'ignore@ignore.com'
+  end
+
   def with_no_recipients
     body :ignore => 'ignore'
   end

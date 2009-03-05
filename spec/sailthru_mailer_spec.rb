@@ -18,7 +18,7 @@ describe Sailthru::Mailer do
       2.times { MyMailer.deliver_invitation('pat@example.com') }
     end
 
-    it "should parse the template name" do
+    it "should infer the template name" do
       @mock_client.should_receive(:send).with("invitation", anything, anything, anything)
       MyMailer.deliver_invitation('pat@example.com')
     end
@@ -36,6 +36,11 @@ describe Sailthru::Mailer do
     it "should pass reply-to to the mailer" do
       @mock_client.should_receive(:send).with(anything, anything, anything, {:replyto => "admin@example.com"})
       MyMailer.deliver_invitation('pat@example.com')
+    end
+
+    it "should allow the template to be overridden" do
+      @mock_client.should_receive(:send).with('super_template', anything, anything, anything)
+      MyMailer.deliver_with_custom_template
     end
 
     it "should blow up if recipients is not set" do
