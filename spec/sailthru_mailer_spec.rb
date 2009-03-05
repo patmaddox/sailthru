@@ -17,6 +17,12 @@ module Sailthru
         Sailthru::TriggermailClient.stub!(:new).and_return @mock_client
       end
 
+      it "should create a client for each email sent" do
+        c = stub("client", :null_object => true)
+        Sailthru::TriggermailClient.should_receive(:new).twice.and_return c
+        2.times { @klass.deliver_invitation('pat@example.com') }
+      end
+
       it "should parse the template name" do
         @mock_client.should_receive(:send).with("invitation", anything, anything, anything)
         @klass.deliver_invitation('pat@example.com')
