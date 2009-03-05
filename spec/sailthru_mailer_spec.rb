@@ -33,9 +33,14 @@ describe Sailthru::Mailer do
       MyMailer.deliver_invitation('pat@example.com')
     end
 
-    it "should pass mail options to the mailer" do
+    it "should pass reply-to to the mailer" do
       @mock_client.should_receive(:send).with(anything, anything, anything, {:replyto => "admin@example.com"})
       MyMailer.deliver_invitation('pat@example.com')
+    end
+
+    it "should blow up if recipients is not set" do
+      lambda { MyMailer.deliver_with_no_recipients }.
+        should raise_error(Sailthru::NoRecipientsSetError)
     end
 
     it "should send an empty hash if no body params are set" do
@@ -43,9 +48,9 @@ describe Sailthru::Mailer do
       MyMailer.deliver_with_no_body
     end
 
-    it "should send an empty hash if no mail options are set" do
+    it "should send an empty hash if reply-to is not set" do
       @mock_client.should_receive(:send).with(anything, anything, anything, { })
-      MyMailer.deliver_with_no_options
+      MyMailer.deliver_with_no_reply_to
     end
   end
 end

@@ -6,6 +6,7 @@ module Sailthru
     end
 
     def deliver(client, template)
+      raise NoRecipientsSetError unless @recipients
       client.send(template, @recipients, @replacements, @options)
     end
 
