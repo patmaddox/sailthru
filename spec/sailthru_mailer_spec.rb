@@ -11,6 +11,8 @@ module Sailthru
         @klass = Class.new(Sailthru::Mailer) do
           def invitation(email_address)
             recipients email_address
+            body :foo => "passed in"
+            reply_to "admin@example.com"
           end
         end
         @mock_client = mock('client')
@@ -30,6 +32,16 @@ module Sailthru
 
       it "should get the recipients from the mailer" do
         @mock_client.should_receive(:send).with(anything, "pat@example.com", anything, anything)
+        @klass.deliver_invitation('pat@example.com')
+      end
+
+      it "should pass body options to the mailer" do
+        @mock_client.should_receive(:send).with(anything, anything, {:foo => "passed in"}, anything)
+        @klass.deliver_invitation('pat@example.com')
+      end
+
+      it "should pass mail options to the mailer" do
+        @mock_client.should_receive(:send).with(anything, anything, anything, {:replyto => "admin@example.com"})
         @klass.deliver_invitation('pat@example.com')
       end
     end
