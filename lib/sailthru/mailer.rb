@@ -1,11 +1,24 @@
 module Sailthru
   class Mailer
+    def initialize
+      @replacements = { }
+      @options = { }
+    end
+
     def deliver(client, template)
-      options = {}
-      if instance_variable_defined?(:@reply_to)
-        options[:replyto] = @reply_to
-      end
-      client.send(template, @recipients, @replacements, options)
+      client.send(template, @recipients, @replacements, @options)
+    end
+
+    def recipients(*list)
+      @recipients = list.join(', ')
+    end
+
+    def body(replacements)
+      @replacements.merge! replacements
+    end
+
+    def reply_to(email)
+      @options[:replyto] = email
     end
 
     class << self
@@ -22,18 +35,6 @@ module Sailthru
           super
         end
       end
-    end
-
-    def recipients(*list)
-      @recipients = list.join(', ')
-    end
-
-    def body(replacements)
-      @replacements = replacements
-    end
-
-    def reply_to(email)
-      @reply_to = email
     end
   end
 end
