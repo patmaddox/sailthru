@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.date = %q{2009-03-05}
   s.email = %q{pat.maddox@gmail.com}
   s.extra_rdoc_files = ["README.rdoc", "LICENSE"]
-  s.files = ["README.rdoc", "VERSION.yml", "lib/sailthru", "lib/sailthru/mailer.rb", "lib/sailthru/triggermailer_client.rb", "lib/sailthru.rb", "spec/sailthru_mailer_spec.rb", "spec/spec_helper.rb", "LICENSE"]
+  s.files = ["README.rdoc", "VERSION.yml", "lib/sailthru", "lib/sailthru/delivery.rb", "lib/sailthru/mailer.rb", "lib/sailthru/test.rb", "lib/sailthru/triggermailer_client.rb", "lib/sailthru.rb", "spec/sailthru_delivery_spec.rb", "spec/sailthru_mailer_spec.rb", "spec/spec_helper.rb", "LICENSE"]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/pat-maddox/sailthru}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
