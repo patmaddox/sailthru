@@ -13,8 +13,9 @@ module Sailthru
     def deliver(client, template)
       raise NoRecipientsSetError unless @recipients
       result = client.send(@template || template, @recipients, @replacements, @options)
-      Mailer.deliveries << result
-      result
+      delivery = Delivery.new result
+      Mailer.deliveries << delivery
+      delivery
     end
 
     def recipients(*list)
@@ -34,15 +35,11 @@ module Sailthru
     end
 
     class << self
-      def client
-        Sailthru.test_mode?? FakeClient.new : TriggermailClient.new
-      end
-
       def method_missing(m, *args, &block)
         if /^deliver_(.*)$/ =~ m.to_s && instance_methods.include?($1)
           message = new
           message.send($1, *args, &block)
-          message.deliver client, $1
+          message.deliver Sailthru::new_client, $1
         else
           super
         end

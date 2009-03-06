@@ -3,7 +3,8 @@ require File.join(File.dirname(__FILE__), 'spec_helper')
 
 describe Sailthru::Mailer do
   it "should create a client" do
-    Class.new(Sailthru::Mailer).client.should be_kind_of(Sailthru::TriggermailClient)
+    Sailthru.mode = :deliver
+    Sailthru.new_client.should be_kind_of(Sailthru::TriggermailClient)
   end
 
   describe "mode" do
@@ -23,8 +24,9 @@ describe Sailthru::Mailer do
 
   describe "sending an email" do
     before(:each) do
-      @mock_client = mock('client')
+      @mock_client = mock('client', :send => {:send_id => "abc123"})
       Sailthru::TriggermailClient.stub!(:new).and_return @mock_client
+      Sailthru.mode = :deliver
     end
 
     it "should create a client for each email sent" do

@@ -9,8 +9,8 @@ module Sailthru
   class << self
     attr_writer :mode
 
-    def test_mode?
-      @mode.to_s == "test"
+    def new_client
+      @mode.to_s == "test" ? FakeClient.new : TriggermailClient.new
     end
   end
 
