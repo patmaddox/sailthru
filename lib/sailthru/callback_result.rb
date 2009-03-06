@@ -1,5 +1,7 @@
 module Sailthru
   class CallbackResult
+    attr_reader :email
+
     def initialize(options={})
       @send_id = options["send_id"]
       @email = options["email"]

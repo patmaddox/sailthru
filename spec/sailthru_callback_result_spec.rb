@@ -9,6 +9,10 @@ describe Sailthru::CallbackResult do
     Sailthru::CallbackResult.new("send_id" => "abc123").should_not be_verified
   end
 
+  it "should expose the email" do
+    Sailthru::CallbackResult.new("email" => "foo").email.should == "foo"
+  end
+
   describe "verified?" do
     before(:each) do
       @callback = Sailthru::CallbackResult.new "send_id" => "abc123", "email" => "pat@example.com"
