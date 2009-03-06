@@ -3,7 +3,7 @@ module Sailthru
     attr_reader :send_id
 
     def initialize(response={})
-      @send_id = response[:send_id]
+      @send_id = response["send_id"]
     end
 
     def success?

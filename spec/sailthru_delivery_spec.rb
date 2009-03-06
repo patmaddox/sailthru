@@ -16,16 +16,16 @@ describe Sailthru::Delivery do
   end
 
   it "should not be successful when built without a send_id" do
-    Sailthru::Delivery.new(:send_id => nil).should_not be_success
+    Sailthru::Delivery.new("send_id" => nil).should_not be_success
   end
 
   it "should expose the send_id" do
-    Sailthru::Delivery.new(:send_id => "abc123").send_id.should == "abc123"
+    Sailthru::Delivery.new("send_id" => "abc123").send_id.should == "abc123"
   end
 
   describe "success?" do
     before(:each) do
-      @delivery = Sailthru::Delivery.new :send_id => "abc123"
+      @delivery = Sailthru::Delivery.new "send_id" => "abc123"
       @client = mock("client")
       Sailthru.stub!(:new_client).and_return @client
     end
