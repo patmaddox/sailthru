@@ -13,5 +13,13 @@ describe Sailthru::Delivery do
     it "should add the message to the list of deliveries" do
       Sailthru::Mailer.deliveries.should == [@delivery]
     end
+
+    it "should expose the send_id" do
+      @delivery.send_id.should_not be_nil
+    end
+
+    it "should expose the email" do
+      @delivery.email.should_not be_nil
+    end
   end
 end
