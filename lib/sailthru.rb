@@ -1,6 +1,7 @@
 require 'sailthru/triggermailer_client'
 require 'sailthru/mailer'
 require 'sailthru/delivery'
+require 'sailthru/callback_result'
 
 module Sailthru
   API_URI = 'http://api.sailthru.com'
