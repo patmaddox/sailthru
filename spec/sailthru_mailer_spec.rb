@@ -6,6 +6,21 @@ describe Sailthru::Mailer do
     Class.new(Sailthru::Mailer).client.should be_kind_of(Sailthru::TriggermailClient)
   end
 
+  describe "mode" do
+    it "should create a client when mode is deliver" do
+      Sailthru::Mailer.delivery_mode = :deliver
+      c = stub("client", :null_object => true)
+      Sailthru::TriggermailClient.should_receive(:new).and_return c
+      MyMailer.deliver_invitation 'pat.maddox@gmail.com'
+    end
+
+    it "should not create a client when mode is test" do
+      Sailthru::Mailer.delivery_mode = :test
+      Sailthru::TriggermailClient.should_not_receive(:new)
+      MyMailer.deliver_invitation 'pat.maddox@gmail.com'
+    end
+  end
+
   describe "sending an email" do
     before(:each) do
       @mock_client = mock('client')

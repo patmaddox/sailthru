@@ -4,9 +4,12 @@ require 'spec'
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'sailthru'
+require 'sailthru/test'
 
 Spec::Runner.configure do |config|
-
+  config.before(:each) do
+    Sailthru::Mailer.delivery_mode = :deliver
+  end
 end
 
 Sailthru::API_KEY = 'fake-api-key'
