@@ -8,14 +8,14 @@ describe Sailthru::Mailer do
 
   describe "mode" do
     it "should create a client when mode is deliver" do
-      Sailthru::Mailer.delivery_mode = :deliver
+      Sailthru.mode = :deliver
       c = stub("client", :null_object => true)
       Sailthru::TriggermailClient.should_receive(:new).and_return c
       MyMailer.deliver_invitation 'pat.maddox@gmail.com'
     end
 
     it "should not create a client when mode is test" do
-      Sailthru::Mailer.delivery_mode = :test
+      Sailthru.mode = :test
       Sailthru::TriggermailClient.should_not_receive(:new)
       MyMailer.deliver_invitation 'pat.maddox@gmail.com'
     end

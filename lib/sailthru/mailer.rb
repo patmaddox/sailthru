@@ -1,13 +1,8 @@
 module Sailthru
   class Mailer
     @deliveries = []
-    @@delivery_mode = :deliver
     class << self
       attr_reader :deliveries
-
-      def delivery_mode=(m)
-        @@delivery_mode = m
-      end
     end
 
     def initialize
@@ -40,7 +35,7 @@ module Sailthru
 
     class << self
       def client
-        @@delivery_mode.to_s == "test" ? FakeClient.new : TriggermailClient.new
+        Sailthru.test_mode?? FakeClient.new : TriggermailClient.new
       end
 
       def method_missing(m, *args, &block)

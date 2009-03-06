@@ -8,7 +8,7 @@ require 'sailthru/test'
 
 Spec::Runner.configure do |config|
   config.before(:each) do
-    Sailthru::Mailer.delivery_mode = :deliver
+    Sailthru.mode = :deliver
   end
 end
 
