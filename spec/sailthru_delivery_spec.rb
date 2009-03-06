@@ -25,7 +25,7 @@ describe Sailthru::Delivery do
 
   describe "success?" do
     before(:each) do
-      @delivery = Sailthru::Delivery.new "send_id" => "abc123"
+      @delivery = Sailthru::Delivery.new "send_id" => "abc123", "email" => "pat@example.com"
       @client = mock("client")
       Sailthru.stub!(:new_client).and_return @client
     end
@@ -42,6 +42,11 @@ describe Sailthru::Delivery do
 
     it "should be false if the response does not contain the email" do
       @client.stub!(:get_send).and_return({})
+      @delivery.should_not be_success
+    end
+
+    it "should be false if the response contains a different email" do
+      @client.stub!(:get_send).and_return({"email" => "wrong@address.com"})
       @delivery.should_not be_success
     end
   end
